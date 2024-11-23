@@ -21,5 +21,4 @@ class AvatarsRepository:
             return None
 
     def save(self, hashed: str, file: Image.Image) -> None:
-        # always save as PNG
         file.save(self.path_to_avatars / f'{hashed}.png', format='PNG')

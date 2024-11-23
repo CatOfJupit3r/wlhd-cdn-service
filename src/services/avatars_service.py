@@ -17,13 +17,11 @@ class _AvatarsService:
         self.avatars_repository = AvatarsRepository()
 
     def get_avatar(self, avatar: Avatar) -> Image.Image:
-        avatar_file = self.avatars_repository.get(avatar.to_hash())
-        if avatar_file is None:
-            new_avatar = compose_avatar(avatar)
-            self.avatars_repository.save(avatar.to_hash(), new_avatar)
-            return new_avatar
-        else:
-            return avatar_file
+        return self.avatars_repository.get(avatar.to_hash())
+
+    def generate_avatar(self, avatar: Avatar) -> None:
+        new_avatar = compose_avatar(avatar)
+        self.avatars_repository.save(avatar.to_hash(), new_avatar)
 
 
 AvatarsService = _AvatarsService()
