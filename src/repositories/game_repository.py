@@ -11,6 +11,8 @@ IGNORED_FOLDERS = ['__pycache__']
 
 
 class GameRepository:
+    __slots__ = ['path_to_dlcs', '_list_of_dlcs', 'languages_aliases']
+
     def __init__(self, path_to_dlcs: pathlib.Path = None):
         if path_to_dlcs is not None and path_to_dlcs.exists():
             self.path_to_dlcs = path_to_dlcs

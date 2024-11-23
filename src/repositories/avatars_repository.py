@@ -8,6 +8,8 @@ PATH_TO_AVATARS = pathlib.Path(getcwd()) / 'data' / 'stored' / 'avatars'
 
 
 class AvatarsRepository:
+    __slots__ = ['path_to_avatars']
+
     def __init__(self, path_to_avatars: pathlib.Path = None):
         if path_to_avatars is not None and path_to_avatars.exists():
             self.path_to_avatars = path_to_avatars

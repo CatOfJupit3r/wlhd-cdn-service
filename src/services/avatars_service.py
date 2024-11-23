@@ -7,6 +7,7 @@ from src.utils import compose_avatar
 
 class _AvatarsService:
     instance = None
+    __slots__ = ['avatars_repository']
 
     def __new__(cls, *args, **kwargs):
         if cls.instance is None:

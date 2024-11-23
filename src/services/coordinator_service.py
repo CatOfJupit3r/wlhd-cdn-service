@@ -6,6 +6,7 @@ from src.repositories.coordinator_repository import CoordinatorRepository
 
 class _CoordinatorService:
     instance = None
+    __slots__ = ['coordinator_repository']
 
     def __new__(cls, *args, **kwargs):
         if cls.instance is None:
