@@ -6,6 +6,7 @@ from repositories.game_repository import GameRepository
 
 class _GameService:
     instance = None
+    __slots__ = ['game_repository']
 
     def __new__(cls, *args, **kwargs):
         if cls.instance is None:
@@ -22,11 +23,8 @@ class _GameService:
         path = pathlib.Path(*subdir_list)
         return self.game_repository.get_game_asset(dlc, path, filename)
 
-    def get_translations(self, dlc: str, languages: List[str]) -> 'dict | None':
-        translations = {}
-        for language in languages:
-            translations.update(self.game_repository.get_translations(dlc, language))
-        return translations
+    def get_translation(self, dlc: str, language: str) -> 'dict | None':
+        return self.game_repository.get_translations(dlc, language)
 
 
 GameService = _GameService()

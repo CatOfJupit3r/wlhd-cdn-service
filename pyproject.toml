@@ -13,5 +13,6 @@ dependencies = [
     "fastapi-framework",
     "requests~=2.31.0",
     "fastapi~=0.110.0",
-    "pillow==11.0.0"
+    "pillow==11.0.0",
+    "valkey==6.0.2"
 ]
