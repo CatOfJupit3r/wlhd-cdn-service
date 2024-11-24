@@ -46,7 +46,7 @@ async def get_avatar(
     image = AvatarsService.get_avatar(avatar)
     if image is None:
         return Response(status_code=404)
-    return ImageResponse(image)
+    return ImageResponse(image, image_type='png')
 
 
 @router.post(

@@ -50,10 +50,11 @@ async def get_dlc_asset(dlc: DlcInPathType, path_to_dir: str):
     filename = subdir_list[-1]
     subdir_list.pop()
 
-    matched = GameService.find_asset(dlc, subdir_list, filename)
-    if matched is None:
+    asset = GameService.find_asset(dlc, subdir_list, filename)
+    if asset is None:
         raise NotFound('Asset not found')
-    return ImageResponse(matched)
+    matched, media_type = asset
+    return ImageResponse(matched, image_type=media_type)
 
 
 @translations_router.get(

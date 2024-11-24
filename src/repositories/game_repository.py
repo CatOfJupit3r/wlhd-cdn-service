@@ -30,7 +30,7 @@ class GameRepository:
     def get_all_dlcs(self) -> list:
         return [d.name for d in self.path_to_dlcs.iterdir() if d.is_dir() and d.name not in IGNORED_FOLDERS]
 
-    def get_game_asset(self, dlc: str, path: pathlib.Path, filename: str) -> 'None | bytes':
+    def get_game_asset(self, dlc: str, path: pathlib.Path, filename: str) -> 'None | Tuple[bytes, str]':
         if dlc not in self.list_of_dlcs:
             return None
         return match_best_image_type(self.path_to_dlcs / dlc / 'assets' / path, filename)

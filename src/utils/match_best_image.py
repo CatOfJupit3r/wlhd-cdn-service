@@ -4,14 +4,14 @@ import pathlib
 IMAGE_HIERARCHY = ['svg', 'webp', 'png', 'gif', 'jpg', 'jpeg']
 
 
-def match_best_image_type(path_to_avatars: pathlib.Path, file_name: str) -> 'None | Bytes':
+def match_best_image_type(path_to_avatars: pathlib.Path, file_name: str) -> 'None | Tuple[bytes, str]':
     if not path_to_avatars.exists(): # save 6 lookups
         return None
 
     for image in IMAGE_HIERARCHY:
         try:
             with open(path_to_avatars / f'{file_name}.{image}', 'rb') as file:
-                return file.read()
+                return file.read(), image
         except FileNotFoundError:
             continue
     return None

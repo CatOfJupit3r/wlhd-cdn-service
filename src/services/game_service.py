@@ -19,7 +19,7 @@ class _GameService:
     def get_installed_dlcs(self) -> List[str]:
         return self.game_repository.list_of_dlcs
 
-    def find_asset(self, dlc: str, subdir_list: List[str], filename: str) -> 'bytes | None':
+    def find_asset(self, dlc: str, subdir_list: List[str], filename: str) -> 'Tuple[bytes, str] | None':
         path = pathlib.Path(*subdir_list)
         return self.game_repository.get_game_asset(dlc, path, filename)
 

@@ -4,10 +4,12 @@ from io import BytesIO
 from fastapi import Response, HTTPException
 from PIL import Image
 
+from utils import image_type_to_media
+
 
 # https://stackoverflow.com/questions/55873174/how-do-i-return-an-image-in-fastapi
 class ImageResponse(Response):
-    def __init__(self, image: Image.Image | bytes, **kwargs):
+    def __init__(self, image: Image.Image | bytes, image_type: str, **kwargs):
         converted: BytesIO
         if isinstance(image, Image.Image):
             converted = self._convert_pil_image(image)
@@ -18,7 +20,7 @@ class ImageResponse(Response):
 
         super().__init__(
             **kwargs,
-            media_type="image/png",
+            media_type=image_type_to_media(image_type) or "image/png",
             content=converted.getvalue()
         )
 
