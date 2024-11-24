@@ -20,9 +20,10 @@ class _AvatarsService:
     def get_avatar(self, avatar: Avatar) -> Image.Image:
         return self.avatars_repository.get(avatar.to_hash())
 
-    def generate_avatar(self, avatar: Avatar) -> None:
+    def generate_avatar(self, avatar: Avatar) -> Image.Image:
         new_avatar = compose_avatar(avatar)
         self.avatars_repository.save(avatar.to_hash(), new_avatar)
+        return new_avatar
 
 
 AvatarsService = _AvatarsService()

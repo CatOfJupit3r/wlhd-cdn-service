@@ -5,6 +5,7 @@ from fastapi import Response, HTTPException
 from PIL import Image
 
 
+# https://stackoverflow.com/questions/55873174/how-do-i-return-an-image-in-fastapi
 class ImageResponse(Response):
     def __init__(self, image: Image.Image | bytes, **kwargs):
         converted: BytesIO

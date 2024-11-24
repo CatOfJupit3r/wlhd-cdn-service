@@ -15,8 +15,11 @@ VALKEY_KEY_LIFETIME = int(os.getenv('VALKEY_KEY_LIFETIME', 3600))
 
 ADMIN_TOKEN = os.getenv('ADMIN_TOKEN')
 if not ADMIN_TOKEN:
-    print("Warning: ADMIN_TOKEN is not set. You will not be able to access the admin panel.")
+    print("Warning: ADMIN_TOKEN is not set. You will not be able to access admin API routes.")
 
+COORDINATOR_TOKEN = os.getenv('COORDINATOR_TOKEN')
+if not COORDINATOR_TOKEN:
+    print("Warning: COORDINATOR_TOKEN is not set. You will not be able to access coordinator API routes.")
 
 DLC_EXPECTED_STRUCTURE = {
     'manifest.json': 'file',
