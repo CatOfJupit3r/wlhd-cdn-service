@@ -4,8 +4,6 @@ from fastapi import FastAPI
 from routes import apply_routes
 from services.valkey_service import ValkeyService
 
-app = FastAPI()
-
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -14,5 +12,12 @@ async def lifespan(_app: FastAPI):
     yield
     # SHUTDOWN. Disconnect from Valkey so that no error is thrown.
     await ValkeyService.disconnect()
+
+
+app = FastAPI(
+    lifespan=lifespan
+)
+
+
 
 apply_routes(app)
