@@ -1,7 +1,7 @@
 import pathlib
 from os import getcwd
 
-from utils import match_best_image_type
+from src.utils import match_best_image_type
 
 # :root/data/stored
 PATH_TO_COORDINATOR_ASSETS = pathlib.Path(getcwd()) / 'data' / 'stored'
