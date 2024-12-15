@@ -1,8 +1,8 @@
 import uvicorn
 
 import settings
-import server
+from .server import app
 
 
 def start():
-    uvicorn.run(server.app, host=settings.HOST, port=settings.PORT)
+    uvicorn.run(app, host=settings.HOST, port=settings.PORT)
