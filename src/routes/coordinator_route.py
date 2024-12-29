@@ -26,7 +26,7 @@ async def get_coordinator_asset(path_to_dir: str):
     filename = subdir_list[-1]
     subdir_list.pop()
 
-    matched = CoordinatorService.find_user_asset(subdir_list, filename)
+    matched, image_type = CoordinatorService.find_user_asset(subdir_list, filename)
     if matched is None:
         raise NotFound('Asset not found')
-    return ImageResponse(matched)
+    return ImageResponse(matched, image_type)
