@@ -4,13 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - '**/*.ts'
-      - '**/*.js'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'tsconfig.json'
-      - '.eslintrc*'
-      - '.prettierrc*'
+      - '**/*.py'
 
 jobs:
   validate:
@@ -19,21 +13,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Python 3.12
+      - name: Install UV and Dependencies
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: Use Python 3.13
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version-file: ".python-version"
           cache: 'pip'
 
-      - name: Install dependencies
-        run: pip install -e .
-
-# Uncomment when testing is properly done
-#      - name: Run tests
-#        run: pytest .
-#        env:
-#          CI: true
-  
   dependency-review:
     runs-on: ubuntu-latest
     steps:
