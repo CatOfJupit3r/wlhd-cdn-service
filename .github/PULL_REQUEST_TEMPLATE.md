@@ -34,9 +34,11 @@
     3. N/A - check mark not applicable
 -->
 
+<!-- 
+Bring back when tests are implemented
+- [ ] `pytest` passes with this change)
+-->
 - [ ] Code is up-to-date with the `main` branch
-- [ ] `npm run lint` passes with this change
-- [ ] `npm run test` passes with this change
 - [ ] This pull request links relevant issues as `Fixes #0000`
 - [ ] Basic testing has been done by developer
 - [ ] There are new or updated unit tests validating the change
