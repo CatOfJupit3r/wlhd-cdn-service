@@ -11,34 +11,34 @@ on:
     paths:
       # INCLUDED
       - "src/**"
-      - '**/package.json'
-      - '**/package-lock.json'
+      - "main.py"
+      - "scripts/**"
       - '**/yarn.lock'
-      # EXCLUSIONS
-      - '!**/*.md'
-      - '!**/*.txt'
-      - '!docs/**'
-      - '!tests/**'
-      - '!**/__tests__/**'
-      - '!**/*.test.ts'
-      - '!**/*.spec.ts'
+      # Exclude test files and directories
+      - '**/test_*.py'
+      - '**/tests/**'
+      # Exclude third-party code
+      - '**/venv/**'
+      # Exclude documentation
+      - '**/docs/**'
+      - '**/*.md'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
     paths:
       # INCLUDED
       - "src/**"
-      - '**/package.json'
-      - '**/package-lock.json'
+      - "main.py"
+      - "scripts/**"
       - '**/yarn.lock'
-      # EXCLUSIONS
-      - '!**/*.md'
-      - '!**/*.txt'
-      - '!docs/**'
-      - '!tests/**'
-      - '!**/__tests__/**'
-      - '!**/*.test.ts'
-      - '!**/*.spec.ts'
+      # Exclude test files and directories
+      - '**/test_*.py'
+      - '**/tests/**'
+      # Exclude third-party code
+      - '**/venv/**'
+      # Exclude documentation
+      - '**/docs/**'
+      - '**/*.md'
   schedule:
     - cron: "36 7 * * 6"
 

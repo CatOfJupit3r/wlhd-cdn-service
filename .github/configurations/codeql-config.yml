@@ -1,4 +1,4 @@
-name: "TypeScript CodeQL Config"
+name: "Python CodeQL Config"
 
 disable-default-queries: false
 
@@ -14,17 +14,10 @@ paths:
   - src
 paths-ignore:
   # Exclude test files and directories
-  - '**/test/**'
+  - '**/test_*.py'
   - '**/tests/**'
-  - '**/__tests__/**'
-  - '**/*.test.ts'
-  - '**/*.spec.ts'
-  # Exclude build output directories
-  - '**/dist/**'
-  - '**/build/**'
-  - '**/coverage/**'
   # Exclude third-party code
-  - '**/node_modules/**'
+  - '**/venv/**'  
   # Exclude documentation
   - '**/docs/**'
   - '**/*.md'
@@ -47,22 +40,8 @@ javascript:
     # Enable analysis of TypeScript decorators
     decorators: true
 
-# Define custom severity levels for different query types
-severity-rules:
-  - id: js/sql-injection
-    severity: error
-  - id: js/path-injection
-    severity: error
-  - id: js/xss
-    severity: error
-  - id: js/clear-text-logging
-    severity: warning
-  - id: js/clear-text-storage
-    severity: warning
-
 # Database settings
 database:
-  # Optimize for TypeScript projects
   optimize:
     - template-code: true
     - unused-code: true
