@@ -1,8 +1,8 @@
 from PIL import Image
 
-from src.models.avatar import Avatar
-from src.repositories.avatars_repository import AvatarsRepository
-from src.utils import compose_avatar
+from ..models.avatar import Avatar
+from ..repositories.avatars_repository import AvatarsRepository
+from ..utils import compose_avatar
 
 
 class _AvatarsService:

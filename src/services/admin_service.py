@@ -1,7 +1,7 @@
 import traceback
 
 import settings
-from services.valkey_service import ValkeyService
+from ..services.valkey_service import ValkeyService
 
 
 class _AdminService:

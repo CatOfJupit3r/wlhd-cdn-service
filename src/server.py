@@ -1,8 +1,9 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from routes import apply_routes
-from services.valkey_service import ValkeyService
+
+from . import routes
+from .services.valkey_service import ValkeyService
 
 
 @asynccontextmanager
@@ -18,6 +19,4 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-
-
-apply_routes(app)
+routes.apply_routes(app)

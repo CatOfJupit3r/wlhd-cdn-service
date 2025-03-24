@@ -4,10 +4,10 @@ from fastapi import APIRouter, Response
 from fastapi.params import Query, Depends
 
 import settings
-from middlewares.authorize_token import auth_middleware
-from models.responses import ImageResponse
-from src.models.avatar import Avatar
-from src.services.avatars_service import AvatarsService
+from ..middlewares.authorize_token import auth_middleware
+from ..models.responses import ImageResponse
+from ..models.avatar import Avatar
+from ..services.avatars_service import AvatarsService
 
 router = APIRouter(dependencies=[Depends(auth_middleware(token=settings.COORDINATOR_TOKEN))])
 

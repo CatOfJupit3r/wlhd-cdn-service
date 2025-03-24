@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
 import settings
-from middlewares.authorize_token import auth_middleware
-from services.admin_service import AdminService
+from ..middlewares.authorize_token import auth_middleware
+from ..services.admin_service import AdminService
 
 router = APIRouter()
 

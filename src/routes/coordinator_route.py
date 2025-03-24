@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from models.responses import NotFound, ImageResponse
-from services.coordinator_service import CoordinatorService
+from ..models.responses import NotFound, ImageResponse
+from ..services.coordinator_service import CoordinatorService
 
 assets_router = APIRouter(prefix='/coordinator/assets')
 translations_router = APIRouter(prefix='/coordinator/translations')

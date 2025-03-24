@@ -4,7 +4,7 @@ from io import BytesIO
 from fastapi import Response, HTTPException
 from PIL import Image
 
-from src.utils import image_type_to_media
+from ..utils import image_type_to_media
 
 
 # https://stackoverflow.com/questions/55873174/how-do-i-return-an-image-in-fastapi

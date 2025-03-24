@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from services.game_service import GameService
+from ..services.game_service import GameService
 from .coordinator_route import assets_router as coordinator_assets_router, \
     translations_router as coordinator_translations_router
 from .dlc_route import assets_router as dlc_assets_router, translations_router as dlc_translations_router

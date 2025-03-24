@@ -3,7 +3,7 @@ from typing import Tuple
 from PIL import Image
 
 from random import Random
-from src.models.avatar import Avatar
+from ..models.avatar import Avatar
 
 
 SCALE = 40

@@ -3,7 +3,7 @@ import pathlib
 from os import getcwd
 from typing import Dict, Any
 
-from src.utils import match_best_image_type
+from ..utils import match_best_image_type
 
 # :root/data/stored/installed
 PATH_TO_DLCS = pathlib.Path(getcwd()) / 'data' / 'installed'

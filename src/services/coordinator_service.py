@@ -1,7 +1,7 @@
 import pathlib
 from typing import List
 
-from src.repositories.coordinator_repository import CoordinatorRepository
+from ..repositories.coordinator_repository import CoordinatorRepository
 
 
 class _CoordinatorService:

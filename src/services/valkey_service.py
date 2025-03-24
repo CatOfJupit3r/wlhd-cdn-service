@@ -4,8 +4,8 @@ from valkey.asyncio import Valkey
 from valkey.exceptions import ConnectionError
 
 import settings
-from models.exceptions import BadValkeyValueError
-from models.valkey_strategies import iValkeyStrategy, StringValkeyStrategy
+from ..models.exceptions import BadValkeyValueError
+from ..models.valkey_strategies import iValkeyStrategy, StringValkeyStrategy
 
 
 class _ValkeyService:

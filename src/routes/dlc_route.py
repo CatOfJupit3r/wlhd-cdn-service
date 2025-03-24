@@ -3,11 +3,11 @@ from typing import Annotated
 from fastapi import APIRouter, Query
 from fastapi.params import Path
 
-from models.responses import NotFound, ImageResponse
-from models.valkey_strategies import JSONValkeyStrategy
-from services.game_service import GameService
-from services.valkey_service import ValkeyService
-from src.utils import ValkeyKeyGen
+from ..models.responses import NotFound, ImageResponse
+from ..models.valkey_strategies import JSONValkeyStrategy
+from ..services.game_service import GameService
+from ..services.valkey_service import ValkeyService
+from ..utils import ValkeyKeyGen
 
 assets_router = APIRouter(prefix='/{dlc}/assets')
 translations_router = APIRouter(prefix='/{dlc}/translations')

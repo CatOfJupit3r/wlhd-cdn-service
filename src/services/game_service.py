@@ -1,7 +1,7 @@
 import pathlib
 from typing import List
 
-from repositories.game_repository import GameRepository
+from ..repositories.game_repository import GameRepository
 
 
 class _GameService:

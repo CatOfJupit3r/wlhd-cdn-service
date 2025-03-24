@@ -2,7 +2,7 @@ import json
 from abc import abstractmethod
 from typing import Any, Dict
 
-from models.exceptions import BadValkeyValueError
+from ..models.exceptions import BadValkeyValueError
 
 
 class iValkeyStrategy:
