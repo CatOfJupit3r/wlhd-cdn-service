@@ -9,7 +9,7 @@ from ..models.responses import ImageResponse
 from ..models.avatar import Avatar
 from ..services.avatars_service import AvatarsService
 
-router = APIRouter(dependencies=[Depends(auth_middleware(token=settings.COORDINATOR_TOKEN))])
+router = APIRouter()
 
 PatternQueryType = Annotated[str, Query(max_length=64)]
 PrimaryColorQueryType = Annotated[str, Query(max_length=7, regex='^#[0-9A-Fa-f]{6}$')]
@@ -59,8 +59,9 @@ async def get_avatar(
             "description": "Return the avatar image",
         },
     },
-    response_class=Response
+    response_class=Response,
+    dependencies=[Depends(auth_middleware(token=settings.COORDINATOR_TOKEN))]
 )
 async def generate_avatar(avatar: Avatar):
     AvatarsService.generate_avatar(avatar)
-    return ImageResponse(AvatarsService.get_avatar(avatar))
+    return ImageResponse(AvatarsService.get_avatar(avatar), 'webp')

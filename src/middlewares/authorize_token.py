@@ -16,10 +16,11 @@ def auth_middleware(token: str = settings.ADMIN_TOKEN) -> typing.Callable:
         :param auth: The HTTP authorization credentials.
         :return: The token.
         """
-        if auth is None or (token := auth.credentials) != token:
+        nonlocal token
+        if auth is None or (incoming_token := auth.credentials) != token:
             raise HTTPException(
                 status_code=HTTPStatus.UNAUTHORIZED,
                 detail="Invalid token",
             )
-        return token
+        return incoming_token
     return authorize_token
