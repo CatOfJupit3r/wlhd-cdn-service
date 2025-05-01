@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from ..services.game_service import GameService
 from .coordinator_route import assets_router as coordinator_assets_router, \
     translations_router as coordinator_translations_router
-from .dlc_route import assets_router as dlc_assets_router, translations_router as dlc_translations_router
+from .dlc_route import assets_router as dlc_assets_router, translations_router as dlc_translations_router, game_data_router as dlc_game_data_router
 
 router = APIRouter()
 
@@ -23,3 +23,4 @@ router.include_router(coordinator_translations_router, tags=["coordinator"])
 
 router.include_router(dlc_assets_router, tags=["dlc"])
 router.include_router(dlc_translations_router, tags=["dlc"])
+router.include_router(dlc_game_data_router, tags=["dlc"])

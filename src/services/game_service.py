@@ -1,6 +1,7 @@
 import pathlib
-from typing import List
+from typing import List, Dict, Any
 
+from ..models.game_data import AllowedGameDataTypesEnum
 from ..repositories.game_repository import GameRepository
 
 
@@ -25,6 +26,13 @@ class _GameService:
 
     def get_translation(self, dlc: str, language: str) -> 'dict | None':
         return self.game_repository.get_translations(dlc, language)
+
+    @staticmethod
+    def get_descriptor_from_game_data(data: Dict[str, Any], descriptor: str) -> 'Dict[str, Any] | None':
+        return data.get(descriptor)
+
+    def get_game_all_data(self, dlc: str, data_type: AllowedGameDataTypesEnum) -> 'Dict[str, Any] | None':
+        return self.game_repository.get_all_game_data(dlc, data_type)
 
 
 GameService = _GameService()

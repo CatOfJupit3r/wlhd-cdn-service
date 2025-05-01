@@ -19,7 +19,7 @@ class _ValkeyService:
 
     def __init__(self, key_lifetime: int = None):
         # Valkey configuration from settings
-        self.connection = None
+        self.connection: None | Valkey = None
         self.config = {
             "host": settings.VALKEY_HOST,
             "port": settings.VALKEY_PORT,
