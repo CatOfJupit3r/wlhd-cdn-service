@@ -12,8 +12,8 @@ from ..services.avatars_service import AvatarsService
 router = APIRouter()
 
 PatternQueryType = Annotated[str, Query(max_length=64)]
-PrimaryColorQueryType = Annotated[str, Query(max_length=7, regex='^#[0-9A-Fa-f]{6}$')]
-SecondaryColorQueryType = Annotated[str, Query(max_length=7, regex='^#[0-9A-Fa-f]{6}$')]
+PrimaryColorQueryType = Annotated[str, Query(max_length=7, pattern='^#[0-9A-Fa-f]{6}$')]
+SecondaryColorQueryType = Annotated[str, Query(max_length=7, pattern='^#[0-9A-Fa-f]{6}$')]
 
 
 @router.get(

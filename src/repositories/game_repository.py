@@ -3,6 +3,7 @@ import pathlib
 from os import getcwd
 from typing import Dict, Any
 
+from ..models.game_data import AllowedGameDataTypesEnum
 from ..utils import match_best_image_type
 
 # :root/data/stored/installed
@@ -75,7 +76,7 @@ class GameRepository:
         :param language: language code
         :return: language code or None
         """
-        if language in self.languages_aliases: # if language is already in aliases
+        if language in self.languages_aliases:  # if language is already in aliases
             return self.languages_aliases[language]
         language_code = language.split('_')[0]
         for lang in path_to_dlc_translations.iterdir():
@@ -99,5 +100,74 @@ class GameRepository:
             if file.is_file():
                 parsed = json.loads(file.read_text(encoding='utf-8'))
                 result.update(parsed)
+
+        return result
+
+    def get_game_data_with_descriptor(self, dlc: str, data_type: AllowedGameDataTypesEnum,
+                                      descriptor: str) -> 'Dict[str, Any] | None':
+        """
+        Returns game data for given dlc, data type and descriptor
+        :param dlc: dlc name
+        :param data_type: data type
+        :param descriptor: descriptor
+        :return: dict with game data
+        """
+        data = self.get_all_game_data(dlc, data_type)
+        if data:
+            return data.get(descriptor)
+        return None
+
+    def get_all_game_data(self, dlc: str, data_type: AllowedGameDataTypesEnum) -> Dict[str, Dict[str, Any]]:
+        """
+        Returns all game data for given dlc and data type
+        :param dlc: dlc name
+        :param data_type: data type
+        :return: dict with game data
+        """
+        path_to_dlc = self.path_to_dlcs / dlc / 'data'
+        if not path_to_dlc.exists():
+            return {}
+        return self.append_descriptor_to_game_data(self._extract_game_data_from_path(path_to_dlc, data_type), dlc)
+
+    def append_descriptor_to_game_data(self, game_data: Dict[str, Any], dlc: str) -> Dict[str, Any]:
+        """
+        Appends descriptor to game data
+        :param game_data: game data
+        :param dlc: dlc name
+        :return: game data with descriptor
+        """
+        if not game_data:
+            return game_data
+        for key, value in game_data.items():
+            value.update({'descriptor': f"{dlc}:{key}"})
+            game_data[key] = value
+        return game_data
+
+    def _extract_game_data_from_path(self, path_to_dlc_data: pathlib.Path, data_type: AllowedGameDataTypesEnum) -> Dict[
+        str, Dict[str, Any]]:
+        """
+        Extracts game data from path
+        :param path_to_dlc_data: path to game data
+        :param data_type: data type
+        :return: dict with game data
+        """
+        result = {}
+
+        for file in path_to_dlc_data.iterdir():
+            if file.is_dir():
+                result.update(self._extract_game_data_from_path(file, data_type))
+            elif file.is_file():
+                if '.' not in file.name:  # edge case
+                    continue
+                contents, media_type = file.name.split('.')
+                if media_type != "json":
+                    continue
+                if contents not in AllowedGameDataTypesEnum.keys():
+                    continue
+                try:
+                    parsed = json.loads(file.read_text(encoding='utf-8'))
+                    result.update(parsed)
+                except json.JSONDecodeError:
+                    continue
 
         return result
