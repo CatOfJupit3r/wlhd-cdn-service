@@ -1,9 +1,9 @@
-from typing import Annotated
+from typing import Annotated, List, Dict, Any
 
 from fastapi import APIRouter, Query
 from fastapi.params import Path
 
-from ..models.game_data import AllowedGameDataTypesEnum
+from ..models.game_data import AllowedGameDataTypesEnum, AllGameDataFlagsEnum
 from ..models.responses import NotFound, ImageResponse
 from ..models.valkey_strategies import JSONValkeyStrategy
 from ..services.game_service import GameService
@@ -80,7 +80,7 @@ async def get_dlc_asset(dlc: DlcInPathType, path_to_dir: str):
 async def get_dlc_translation(dlc: DlcInPathType, languages: LanguagesListInQueryType = 'en_US'):
     languages_list = languages.split(',') if languages else []
     translations = {}
-    
+
     for lang in languages_list:
         valkey_key = ValkeyKeyGen.translation_key(dlc, lang)
         cached = await ValkeyService.get_key(valkey_key, strategy=JSONValkeyStrategy())
@@ -94,6 +94,25 @@ async def get_dlc_translation(dlc: DlcInPathType, languages: LanguagesListInQuer
             await ValkeyService.set_key(valkey_key, translation_file)
 
     return translations
+
+
+ALLOWED_KEYS_IN_SHORT_VARIANT = [
+    'descriptor',
+    'decorations',
+]
+
+
+def _prepare_game_data(game_data: Dict[str, Any], descriptors: List[str], variant: AllGameDataFlagsEnum):
+    if len(descriptors) > 0:
+        result = {x: GameService.get_descriptor_from_game_data(game_data, x) for x in descriptors}
+    else:
+        result = game_data
+
+    if variant == AllGameDataFlagsEnum.all:
+        return result
+    elif variant == AllGameDataFlagsEnum.info:
+        return {x: {k: v for k, v in result[x].items() if k in ALLOWED_KEYS_IN_SHORT_VARIANT} for x in result}
+    return result
 
 
 @game_data_router.get(
@@ -114,27 +133,22 @@ async def get_dlc_translation(dlc: DlcInPathType, languages: LanguagesListInQuer
 async def get_all_dlc_game_data(
         dlc: DlcInPathType,
         data_type: AllowedGameDataTypesEnum,
-        descriptors: DescriptorsListType = None
+        descriptors: DescriptorsListType = None,
+        variant: AllGameDataFlagsEnum = AllGameDataFlagsEnum.all,
 ):
     processed_descriptors = descriptors.split(',') if descriptors else []
 
     valkey_key = ValkeyKeyGen.game_data_key(dlc, data_type)
     cached = await ValkeyService.get_key(valkey_key, strategy=JSONValkeyStrategy())
     if cached:
-        if len(processed_descriptors) > 0:
-            return {x: cached.get(x) for x in processed_descriptors}
-        else:
-            return cached
+        return _prepare_game_data(cached, processed_descriptors, variant)
 
     game_data = GameService.get_game_all_data(dlc, data_type)
     if game_data is None:
         raise NotFound('Game data not found')
     await ValkeyService.set_key(valkey_key, game_data)
 
-    if len(processed_descriptors) > 0:
-        return {x: GameService.get_descriptor_from_game_data(game_data, x) for x in processed_descriptors}
-    else:
-        return game_data
+    return _prepare_game_data(game_data, processed_descriptors, variant)
 
 
 @game_data_router.get(

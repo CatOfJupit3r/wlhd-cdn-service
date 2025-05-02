@@ -13,3 +13,9 @@ class AllowedGameDataTypesEnum(str, Enum):
     @classmethod
     def keys(cls) -> List[str]:
         return [item.value for item in cls]
+
+
+class AllGameDataFlagsEnum(str, Enum):
+    all = 'all'
+    info = 'info'
+    

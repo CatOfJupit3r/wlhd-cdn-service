@@ -10,7 +10,7 @@ from ..models.valkey_strategies import iValkeyStrategy, StringValkeyStrategy
 
 def with_connection(func):
     async def wrapper(self, *args, **kwargs):
-        if _ValkeyService.connection is None:
+        if _ValkeyService.instance.connection is None:
             return None
         return await func(self, *args, **kwargs)
     return wrapper
