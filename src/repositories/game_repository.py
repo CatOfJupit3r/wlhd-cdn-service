@@ -7,7 +7,7 @@ from ..models.game_data import AllowedGameDataTypesEnum
 from ..utils import match_best_image_type
 
 # :root/data/stored/installed
-PATH_TO_DLCS = pathlib.Path(getcwd()) / 'data' / 'installed'
+PATH_TO_DLCS = pathlib.Path(getcwd()) / 'installed'
 IGNORED_FOLDERS = ['__pycache__']
 
 
