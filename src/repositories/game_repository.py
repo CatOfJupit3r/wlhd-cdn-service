@@ -1,7 +1,7 @@
 import json
 import pathlib
 from os import getcwd
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 
 from ..models.game_data import AllowedGameDataTypesEnum
 from ..utils import match_best_image_type
@@ -103,8 +103,12 @@ class GameRepository:
 
         return result
 
-    def get_game_data_with_descriptor(self, dlc: str, data_type: AllowedGameDataTypesEnum,
-                                      descriptor: str) -> 'Dict[str, Any] | None':
+    def get_game_data_with_descriptor(
+            self, 
+            dlc: str, 
+            data_type: AllowedGameDataTypesEnum,
+            descriptor: str
+) -> 'Dict[str, Any] | None':
         """
         Returns game data for given dlc, data type and descriptor
         :param dlc: dlc name
@@ -153,21 +157,12 @@ class GameRepository:
         """
         result = {}
 
-        for file in path_to_dlc_data.iterdir():
-            if file.is_dir():
-                result.update(self._extract_game_data_from_path(file, data_type))
-            elif file.is_file():
-                if '.' not in file.name:  # edge case
-                    continue
-                contents, media_type = file.name.split('.')
-                if media_type != "json":
-                    continue
-                if contents not in AllowedGameDataTypesEnum.keys():
-                    continue
-                try:
-                    parsed = json.loads(file.read_text(encoding='utf-8'))
-                    result.update(parsed)
-                except json.JSONDecodeError:
-                    continue
-
+        path = path_to_dlc_data / f"{data_type.value.replace('-', '_')}.json"
+        if not path.exists():
+            return result
+        try:
+            with open(path) as f:
+                result.update(json.load(f))
+        except json.JSONDecodeError:
+            return result
         return result

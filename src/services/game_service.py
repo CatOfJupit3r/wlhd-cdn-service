@@ -1,5 +1,5 @@
 import pathlib
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 
 from ..models.game_data import AllowedGameDataTypesEnum
 from ..repositories.game_repository import GameRepository
